@@ -18,7 +18,7 @@ spec:
           imagePullPolicy: Never
           ports:
             - containerPort: 8080
-
+  
           # Health checks
           livenessProbe: ## Verifica si el contenedor está vivo
             httpGet:
@@ -33,3 +33,19 @@ spec:
               port: 8080
             initialDelaySeconds: 10
             periodSeconds: 5
+          env:
+            - name: APP_NAME
+              valueFrom:
+                configMapKeyRef:
+                  name: app-config
+                  key: APP_NAME
+            - name: APP_ENV
+              valueFrom:
+                configMapKeyRef:
+                  name: app-config
+                  key: APP_ENV
+            - name: APP_VERSION
+              valueFrom:
+                configMapKeyRef:
+                  name: app-config
+                  key: APP_VERSION
