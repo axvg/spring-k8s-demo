@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: app-k8s
 spec:
-  replicas: 3                     # Solo 1 pod por ahora
+  replicas: 3                     # Solo 3 pod por ahora
   selector:
     matchLabels:
       app: app-k8s
@@ -14,7 +14,22 @@ spec:
     spec:
       containers:
         - name: app-k8s
-          image: app-k8s-local:2.0
-          imagePullPolicy: Never     # local image
+          image: app-k8s-local:3.0
+          imagePullPolicy: Never
           ports:
             - containerPort: 8080
+
+          # Health checks
+          livenessProbe: ## Verifica si el contenedor está vivo
+            httpGet:
+              path: /health/liveness
+              port: 8080
+            initialDelaySeconds: 10
+            periodSeconds: 5
+
+          readinessProbe: ## Verifica si el contenedor está listo para recibir tráfico
+            httpGet:
+              path: /health/readiness
+              port: 8080
+            initialDelaySeconds: 10
+            periodSeconds: 5
