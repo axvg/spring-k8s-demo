@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: app-k8s
 spec:
-  replicas: 1                     # Solo 1 pod por ahora
+  replicas: 3                     # Solo 1 pod por ahora
   selector:
     matchLabels:
       app: app-k8s
@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: app-k8s
-          image: app-k8s-local:1.0
+          image: app-k8s-local:2.0
           imagePullPolicy: Never     # local image
           ports:
             - containerPort: 8080
