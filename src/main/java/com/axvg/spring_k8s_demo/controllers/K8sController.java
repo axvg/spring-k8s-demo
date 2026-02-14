@@ -23,14 +23,21 @@ public class K8sController {
     @Value("${APP_VERSION:default}")
     private String appVersion;
 
+    @Value("${DB_USER:default}")
+    private String dbUser;
+
+    @Value("${DB_PASSWORD:default}")
+    private String dbPwd;
+
+
     @GetMapping("/")
     public String hello() throws UnknownHostException {
 
         contador++;
         String hostname = InetAddress.getLocalHost().getHostName();
 
-        return String.format("Versión 1 => Pod = %s , Visitas = %d , Nombre = %s, Env=%s, Ver =%s "
-                , hostname, contador, appName, appEnv, appVersion);
+        return String.format("Versión 1 => Pod = %s , Visitas = %d , Nombre = %s, Env=%s, Ver =%s, UserDB=%s, PassDB=%s"
+                , hostname, contador, appName, appEnv, appVersion, dbUser, dbPwd);
     }
 
     /**
